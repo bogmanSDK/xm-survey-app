@@ -105,12 +105,16 @@ class SurveyViewModel @Inject constructor(private val repository: SurveyReposito
     }
 
     fun onNextQuestion(): Int {
-        currentQuestionIndex += 1
+        if (currentQuestionIndex < _localQuestions.value.size) {
+            currentQuestionIndex += 1
+        }
         return currentQuestionIndex
     }
 
     fun onPreviousQuestion(): Int {
-        currentQuestionIndex -= 1
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex -= 1
+        }
         return currentQuestionIndex
     }
 
@@ -134,7 +138,7 @@ class SurveyViewModel @Inject constructor(private val repository: SurveyReposito
     }
 
     fun submitAnswer(enteredAnswer: String) {
-        if (enteredAnswer.isNullOrEmpty()) {
+        if (enteredAnswer.isEmpty()) {
             showSnackbarMessage(R.string.empty_answer_message)
             return
         }
