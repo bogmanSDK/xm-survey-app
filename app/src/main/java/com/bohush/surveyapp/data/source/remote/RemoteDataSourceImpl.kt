@@ -1,6 +1,5 @@
 package com.bohush.surveyapp.data.source.remote
 
-import com.bohush.surveyapp.core.DataResult
 import com.bohush.surveyapp.data.ApiService
 import com.bohush.surveyapp.model.Answer
 import com.bohush.surveyapp.model.Question
@@ -13,16 +12,7 @@ class RemoteDataSourceImpl @Inject constructor(private val apiService: ApiServic
         return apiService.getQuestions()
     }
 
-    override suspend fun submitAnswer(answer: Answer): DataResult<Unit> {
-        return try {
-            val response = apiService.submitAnswer(answer)
-            if (response.isSuccessful) {
-                DataResult.Success(Unit)
-            } else {
-                DataResult.Error("Failed to submit question: ${response.code()}")
-            }
-        } catch (e: Exception) {
-            DataResult.Error("Error submitting question: ${e.message}")
-        }
+    override suspend fun submitAnswer(answer: Answer): Response<Unit> {
+        return apiService.submitAnswer(answer)
     }
 }
