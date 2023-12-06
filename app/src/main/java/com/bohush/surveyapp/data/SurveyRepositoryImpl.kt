@@ -15,14 +15,14 @@ class SurveyRepositoryImpl @Inject constructor(private val remoteDataSource: Rem
     BaseApiResponse(), SurveyRepository {
 
     // Function to get the list of questions from the server
-    override suspend fun getQuestions(): Flow<DataResult<List<Question>?>> {
-        return flow<DataResult<List<Question>?>> {
+    override suspend fun getQuestions(): Flow<DataResult<List<Question>>> {
+        return flow {
             emit(safeApiCall { remoteDataSource.getQuestions() })
         }.flowOn(Dispatchers.IO)
     }
 
     // Function to submit an answer to a question
     override suspend fun submitAnswer(answer: Answer): DataResult<Unit> {
-        return remoteDataSource.submitAnswer(answer)
+        return safeApiCall { remoteDataSource.submitAnswer(answer) }
     }
 }
