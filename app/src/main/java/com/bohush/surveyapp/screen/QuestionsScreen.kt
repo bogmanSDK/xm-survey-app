@@ -180,11 +180,12 @@ fun QuestionsContent(
                 Spacer(modifier = Modifier.height(64.dp))
 
                 SubmitButton(
-                    onSubmit = onSubmit,
                     isSubmitted = localQuestionModel.isSubmitted,
-                    textValue = textValue,
                     isWaitingAnswerSubmission = uiState.submissionData.isWaitingAnswerSubmission,
-                )
+                    onClick = {
+                        val answer = textValue
+                        onSubmit(answer)
+                    })
             }
         }
 
@@ -218,15 +219,12 @@ fun LoadingIndicator(
 fun SubmitButton(
     isSubmitted: Boolean,
     isWaitingAnswerSubmission: Boolean,
-    textValue: String,
-    onSubmit: (String) -> Unit,
+    onClick: () -> Unit,
 ) {
     val buttonText = if (isSubmitted) R.string.submitted_button else R.string.submit_button
     Button(
-        onClick = {
-            val answer = textValue
-            onSubmit(answer)
-        }, enabled = !isSubmitted && !isWaitingAnswerSubmission
+        onClick = onClick,
+        enabled = !isSubmitted && !isWaitingAnswerSubmission,
     ) {
         Text(
             stringResource(id = buttonText),
