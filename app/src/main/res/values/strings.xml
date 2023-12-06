@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Survey App</string>
+    <string name="welcome">Welcome</string>
+    <string name="start_survey">Start survey</string>
+    <string name="input_answer_hint_text">Type here for an answer…</string>
+    <string name="answer_submitted">Success</string>
+    <string name="answer_submission_failed">Failure…</string>
+    <string name="empty_answer_message">Please provide your answer</string>
+    <string name="next_button">Next</string>
+    <string name="retry_button">Retry</string>
+    <string name="submit_button">Submit</string>
+    <string name="submitted_button">Already submitted</string>
+    <string name="previous_button">Previous</string>
+    <string name="error_receiving_questions">Encountered an issue while attempting to retrieve questions.</string>
+    <string name="questions_submitted">
+        Questions submitted: %1$d
+    </string>
+    <string name="questions_count">Questions %1\$d/%2\$d</string>
+</resources>
