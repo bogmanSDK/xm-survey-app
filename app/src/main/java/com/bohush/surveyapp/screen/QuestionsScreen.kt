@@ -38,7 +38,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -109,12 +108,10 @@ fun QuestionsContent(
     ) {
 
     val pagerState = rememberPagerState(pageCount = { uiState.items.size })
-
-    var textValue by remember { mutableStateOf("") }
+    val textValues = remember { List(uiState.items.size) { mutableStateOf("") } }
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
-            textValue = ""
             onPageChanged(page)
         }
     }
@@ -143,6 +140,7 @@ fun QuestionsContent(
         ) { page ->
 
             val localQuestionModel = uiState.items[page]
+            val textValue = textValues[page].value
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -169,7 +167,9 @@ fun QuestionsContent(
                 } else {
                     TextField(
                         value = textValue,
-                        onValueChange = { textValue = it },
+                        onValueChange = {
+                            textValues[page].value = it
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(end = 8.dp, top = 8.dp),
