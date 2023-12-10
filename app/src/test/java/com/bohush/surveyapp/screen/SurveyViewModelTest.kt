@@ -104,12 +104,13 @@ class SurveyViewModelTest {
     @Test
     fun showPreviousQuestion_decreaseQuestionIndex() = runTest {
         val viewModel = getSurveyViewModel()
-        assertThat(viewModel.uiState.first().currentQuestionIndex).isEqualTo(0)
+        viewModel.onNextQuestion()
+        assertThat(viewModel.uiState.first().currentQuestionIndex).isEqualTo(1)
 
         viewModel.onPreviousQuestion()
 
         val uiState = viewModel.uiState.first()
-        assertThat(uiState.currentQuestionIndex).isEqualTo(-1)
+        assertThat(uiState.currentQuestionIndex).isEqualTo(0)
     }
 
     @Test
